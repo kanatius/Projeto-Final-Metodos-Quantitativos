@@ -66,21 +66,95 @@ if (isset($_GET["dados"]))
         }
         body{
             font-family: 'Times New Roman', Times, serif;
-            text-align: justify;
+            text-align: justify;      
+        }
+        .instituto{
+            text-align: center;
+            font-size: 12;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .aluno{
+            text-align: center;
+            font-size: 12;
+            text-transform: uppercase;
+        }
+        #titulo{
+            text-align: center;
+            font-size: 12;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        #local{
+            text-align: center;
+        }
+        #ano{
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
+        <!-- CAPA -->
+        <h3 class="instituto">Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte</h3>
+        <br>
+        <br>
+        <br>
+        <div class="aluno">Maria Jakeline Freitas da Silva</div>
+        <div class="aluno">Natan Almeida de Lima</div>   
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="titulo">Análise da Variação da Arrecadação de Filmes</div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="local">Pau dos Ferros</div>
+        <div id="ano">2019</div>
+        <!-- CAPA -->
 
-    <h1 align="center">Relatório Estatístico de Análise da Variação da Arrecação Bruta de Filmes</h1>
+
+    <h1 align="center">Relatório Estatístico de Análise da Variação da Arrecadação de Filmes</h1>
     <!-- INTRODUÇÃO -->
     <h2>Introdução</h2>
-    <p>No cinema contemporâneo, diversos filmes geram receitas muito altas e perduram por certo período no topo dos mais assistidos. Porém, não se sabe ao certo quanto tempo estes levam para estabilizar a receita mensal, seja provida de: cinema; serviços de streaming; ou em produtos. Este documento propõe analizar dados sobre a arrecadação destes filmes e disponibilizar dados relevantes para esta problemática.</p>
+    <p>No cinema contemporâneo, diversos filmes geram receitas muito altas e perduram por certo período no topo dos mais assistidos. Porém, não se sabe ao certo quanto tempo estes levam para estabilizar a receita mensal, seja provida de: cinema; serviços de streaming; ou em produtos. Este documento propõe analisar dados sobre a arrecadação destes filmes e disponibilizar dados relevantes para esta problemática.</p>
     <!-- INTRODUÇÃO -->
     <!-- OBJETIVOS -->
     <h2>Objetivos</h2>
-    <p>O objetivo deste documento é analizar a variação das receitas obtidas pelos filmes de grande bilheteria, e identificar, se possível, quanto tempo em média, leva para a arrecação mensal se estabilizar</p>
+    <p>O objetivo deste documento é analisar a variação das receitas obtidas pelos filmes de grande bilheteria, e identificar, se possível, quanto tempo em média, leva para a arrecadação mensal se estabilizar.</p>
     <!-- OBJETIVOS -->
     <!-- METODOLOGIA -->
     <h2>Metodologia</h2>
@@ -95,7 +169,7 @@ if (isset($_GET["dados"]))
                                                                                                             }
                                                                                                             echo ".";
                                                                                                             ?>
-        Os dados analisados se referem à arrecadação de até o primeiro ano desde o lançamento dos filmes citados acima. Os dados foram coletados do vídeo: <a href="https://www.youtube.com/watch?v=oAGdedgvWKI" target="_blank"><b>Marvel vs. DC: Most Money Grossing Movies 1978 - 2019</b></a>
+        Os dados analisados se referem à arrecadação de até o primeiro ano desde o lançamento dos filmes citados acima. Os dados foram coletados do vídeo: <a href="https://www.youtube.com/watch?v=oAGdedgvWKI" target="_blank"><b>Marvel vs. DC: Most Money Grossing Movies 1978 - 2019</b></a>.
     </p>
     <!-- METODOLOGIA -->
     <!--Resultados -->

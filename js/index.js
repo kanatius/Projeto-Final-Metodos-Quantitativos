@@ -13,6 +13,7 @@ $(document).ready(function(){
             }
 
             let valores = queBom(value.children[1].value).split(" ");
+            console.log(valores);
             // MMM
             let vetorValores = [0];
             vetorValores.push(...valores);
@@ -33,7 +34,7 @@ $(document).ready(function(){
             dados.push(filme);
             // dados.amostras.push(value.value);
         }
-        console.log(dados);
+        // console.log(dados);
         $("#dados").val(JSON.stringify(dados));
         document.getElementById("formDados").submit();
     });
@@ -45,15 +46,14 @@ $(document).ready(function(){
 
 function queBom(string){
 
-    while(string.indexOf(" ") >= 0 || string.indexOf(".") > 0 || string.indexOf(",00") >= 0){
-        
-        string = string.replace(".", "");
-        string = string.replace(",00", "");
+    while(string.indexOf(" ") >= 0 || string.indexOf(".") >= 0 || string.indexOf("R$") >= 0){
         string = string.replace(" ", "");
+        string = string.replace(".", "");
+        string = string.replace("R$", "");
     }
 
-    while(string.indexOf("R$") >= 0){
-        string = string.replace("R$", " ");
+    while(string.indexOf(",00") >= 0){
+        string = string.replace(",00", " ");
     }
     string = string.trim();
     return string;
@@ -65,7 +65,7 @@ function calcular(valores){
         return parseFloat(a)-parseFloat(b);
     });
 
-    console.log(valores);
+    // console.log(valores);
     var somatorio = parseFloat(0);
     for(valor of valores){
         somatorio +=parseFloat(valor);
