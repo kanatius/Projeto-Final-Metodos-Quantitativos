@@ -1,4 +1,6 @@
 <?php
+require('correlacao.php');
+
 
 function quedaSegundoMes($mes1, $mes2)
 {
@@ -14,7 +16,7 @@ class QuedaFilme
 function maiorEmenorQueda($filmes)
 {
     //var_dump((float)$filmes[0]->amostra[1][1]);
-    
+
     $maior = new QuedaFilme();
     $menor = new QuedaFilme();
     $maior->valor = quedaSegundoMes($filmes[0]->amostra[1][1], $filmes[0]->amostra[2][1]);
@@ -58,7 +60,15 @@ if (isset($_GET["dados"]))
     <title>Document</title>
 
     <link rel="stylesheet" href="../css/pagina.css">
-
+    <style>
+        p{
+            text-indent: 4em;
+        }
+        body{
+            font-family: 'Times New Roman', Times, serif;
+            text-align: justify;
+        }
+    </style>
 </head>
 
 <body>
@@ -112,32 +122,74 @@ if (isset($_GET["dados"]))
     }
     ?>
     <h3>Estabilização das vendas</h3>
-    <p>Para chegar ao <i>mês-resultado</i> da estabilização da arrecadação, foi relalizado o cálculo da variância das (sub) amostras de 0 a n até n-1 a n. O resultado foi estipulado com um coeficiente abaixo de 1% para a relação entre a variância das subamostras e a variância da amostra completa, a qual inclui o valor do mês de lançamento. A análise dos dados leva em conta que 1 ano é o tempo estipulado no qual a maiorias dos filmes já estabilizaram seus valores de arrecadação mensal.</p>
+    <p>Para chegar ao <i>mês-resultado</i> da estabilização da arrecadação, foi relalizado o cálculo da variância das (sub) amostras de <i>i</i> até n, no qual i começa em 0 (incio das vendas). O resultado foi estipulado com um coeficiente abaixo de 1% para a relação entre a variância das subamostras e a variância da amostra completa. O mês-resultado é definido no mês em que a partir dele até o décimo segundo mês, a variância da arrecadação esteja abaixo de 1% da variância total da amostra. A análise dos dados leva em conta que 1 ano é o tempo estipulado no qual a maiorias dos filmes já estabilizaram seus valores de arrecadação mensal.</p>
     <h4>Quantidade de meses para a estabilização das vendas:</h4>
     <ul>
-    <?php
-    foreach ($dados as $filme){
-        echo "<li>";
-        echo "<b>$filme->nome: </b> ";
-        for($i=1; $i< count($filme->mmm); $i++){
-            if($filme->mmm[$i]->variancia/$filme->mmm[0]->variancia * 100 < 1){
-                $filme->tempoEstab = $i;
-                echo "$i</li>";
-            break;
+        <?php
+        foreach ($dados as $filme) {
+            echo "<li>";
+            echo "<b>$filme->nome: </b> ";
+            for ($i = 1; $i < count($filme->mmm); $i++) {
+                if ($filme->mmm[$i]->variancia / $filme->mmm[0]->variancia * 100 < 1) {
+                    $filme->tempoEstab = $i;
+                    echo "$i</li>";
+                    break;
+                }
             }
         }
-    }
-    ?>
+        ?>
     </ul>
     <?php
-        $totalMeses = 0;
-        foreach ($dados as $filme){
-            $totalMeses += $filme->tempoEstab;
-        }
-        $tempoMedio = $totalMeses / count($dados);
-        echo "<p>O tempo médio para a estabilização das vendas foi de ". number_format($tempoMedio,1) ." meses</p>";
+    $totalMeses = 0;
+    foreach ($dados as $filme) {
+        $totalMeses += $filme->tempoEstab;
+    }
+    $tempoMedio = $totalMeses / count($dados);
+    echo "<p>O tempo médio para a estabilização das vendas foi de " . number_format($tempoMedio, 1) . " meses!</p>";
     ?>
     <!--Resultados -->
+
+    <h3>Correlação</h3>
+    <?php
+
+    foreach ($dados as $filme) {
+        $vetx = [];
+        $vety = [];
+        $vetxAll = [];
+        $vetyAll = [];
+        $cont = 0;
+
+        //AMOSTRA A PARTIR DO MÊS DE ESTABILIZAÇÃO
+        for ($i = $filme->tempoEstab; $i < count($filme->amostra); $i++) {
+            $vetx[$cont] = $filme->amostra[$i][0];
+            $vety[$cont] = $filme->amostra[$i][1];
+            $cont++;
+        }
+        //AMOSTRA A PARTIR DO MÊS DE ESTABILIZAÇÃO
+
+        //AMOSTRA COMPLETA
+        $vetxAll[0] = 0;
+        $vetyAll[0] = 0;
+
+        for ($i = 1; $i < count($filme->amostra); $i++){
+            $vetxAll[$i] = $filme->amostra[$i][0];
+            $vetyAll[$i] = $filme->amostra[$i][1];
+        }
+        //AMOSTRA COMPLETA
+
+        echo "<h4>$filme->nome:</h4>";
+        $filme->correlacao = calcularCorrelacao($vetxAll, $vetyAll);
+        echo "<p>";
+        echo "Correlação da amostra completa é de " . number_format($filme->correlacao, 2) . " (". classificarCorrelacao($filme->correlacao) .").";
+        echo "<br>";
+        echo "</p>";
+        echo "<p>";
+        $correlacao = calcularCorrelacao($vetx, $vety);
+        echo "Correlação da subamostra (do mês $filme->tempoEstab até o décimo segundo) " . number_format($correlacao, 2) . " (". classificarCorrelacao($correlacao) .").";
+        echo "</p>";
+        echo "</pre>";
+    }
+    ?>
 </body>
 
 </html>
