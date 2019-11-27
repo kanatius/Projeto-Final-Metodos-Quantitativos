@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<?php
+#$options = new Options();
+#$options->set('isRemoteEnabled',true);      
+#$dompdf = new Dompdf( $options );
+use Dompdf\Dompdf;
+require_once '../dompdf/autoload.inc.php';
 
-    <link rel="stylesheet" href="../css/pagina.css">
-</head>
-<body>
-    
-    <?php 
-        if(isset($_GET["dados"])){
-            $dados = json_decode($_GET["dados"]);
-            foreach($dados as $filme){
-                echo "<div class='divGrafico'>";
-                echo "<h3>Arrecadação por Mês do Filme $filme->nome</h3>";
-                echo "<img class='imgGrafico' src='http://localhost/Projeto-Final-Metodos-Quantitativos/pages/gerarGraficoArrecadacaoMensal.php?matrizAmostra=". json_encode($filme->amostra) . "'" . "alt=''>";
-                echo "</div>";
-            }  
-        ?>
-    <?php
-        }
-    ?>
-</body>
-</html>
+// header('Location:http://localhost/PFMQ/pages/paginaPDF.php?dados=' . $_GET["dados"]);
+
+#$dompdf = new DOMPDF();
+$dompdf = new Dompdf(array('enable_remote' => true));#habilitar o uso de imagens
+
+$dados = json_decode($_GET["dados"]);
+
+if(isset($_GET["dados"]))
+    $dompdf->loadHtml(file_get_contents("http://localhost/PFMQ/pages/paginaPDF.php?dados=".json_encode($dados)));
+
+
+$dompdf->setPaper('A4', 'portrait');
+
+// // Render the HTML as PDF
+$dompdf->render();
+
+// // Output the generated PDF to Browser
+$dompdf->stream("pdp.pdf",array("Attachment"=>false));
+
+?>

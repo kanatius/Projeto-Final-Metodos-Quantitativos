@@ -33,6 +33,9 @@
     <input type="button" id="btnAddFilme" class="btn btn-success" value="addFilme">
     <input type="submit" style="background-color: green"  id="btnEnviar" class="fadeIn fourth btn btn-success" value="Enviar">
     </div>
+    <form action="pages/gerarDoc.php" method="get" id="formDados">
+        <input id="dados" name="dados" type="text" hidden>
+    </form>
 </div>
 </body>
 </html>
