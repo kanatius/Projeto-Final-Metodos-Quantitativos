@@ -7,7 +7,7 @@
         $grafico->SetTitle(utf8_decode("(em Dólares)"));
         $grafico->SetXTitle("Meses");
         $grafico->SetYTitle(utf8_decode("Receita do Mes"));
-        $grafico->SetPlotType("bars");
+        // $grafico->SetPlotType("bars");
         #Definimos os dados do gráfico
         $dados = json_decode($_GET["matrizAmostra"]);
         

@@ -61,90 +61,96 @@ if (isset($_GET["dados"]))
 
     <link rel="stylesheet" href="../css/pagina.css">
     <style>
-        p{
+        p {
             text-indent: 4em;
         }
-        body{
+
+        body {
             font-family: 'Times New Roman', Times, serif;
-            text-align: justify;      
+            text-align: justify;
         }
-        .instituto{
+
+        .instituto {
             text-align: center;
             font-size: 12;
             text-transform: uppercase;
             font-weight: bold;
         }
-        .aluno{
+
+        .aluno {
             text-align: center;
             font-size: 12;
             text-transform: uppercase;
         }
-        #titulo{
+
+        #titulo {
             text-align: center;
             font-size: 12;
             font-weight: bold;
             text-transform: uppercase;
         }
-        #local{
+
+        #local {
             text-align: center;
         }
-        #ano{
+
+        #ano {
             text-align: center;
         }
     </style>
 </head>
 
 <body>
-        <!-- CAPA -->
-        <h3 class="instituto">Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte</h3>
-        <br>
-        <br>
-        <br>
-        <div class="aluno">Maria Jakeline Freitas da Silva</div>
-        <div class="aluno">Natan Almeida de Lima</div>   
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div id="titulo">Análise da Variação da Arrecadação de Filmes</div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div id="local">Pau dos Ferros</div>
-        <div id="ano">2019</div>
-        <!-- CAPA -->
+    <!-- CAPA -->
+    <h3 class="instituto">Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte</h3>
+    <br>
+    <br>
+    <br>
+    <div class="aluno">Maria Jakeline Freitas da Silva</div>
+    <div class="aluno">Natan Almeida de Lima</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="titulo">Análise da Variação da Arrecadação de Filmes</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="local">Pau dos Ferros</div>
+    <div id="ano">2019</div>
+    <!-- CAPA -->
 
 
     <h1 align="center">Relatório Estatístico de Análise da Variação da Arrecadação de Filmes</h1>
@@ -213,14 +219,6 @@ if (isset($_GET["dados"]))
         }
         ?>
     </ul>
-    <?php
-    $totalMeses = 0;
-    foreach ($dados as $filme) {
-        $totalMeses += $filme->tempoEstab;
-    }
-    $tempoMedio = $totalMeses / count($dados);
-    echo "<p>O tempo médio para a estabilização das vendas foi de " . number_format($tempoMedio, 1) . " meses!</p>";
-    ?>
     <!--Resultados -->
 
     <h3>Correlação</h3>
@@ -245,7 +243,7 @@ if (isset($_GET["dados"]))
         $vetxAll[0] = 0;
         $vetyAll[0] = 0;
 
-        for ($i = 1; $i < count($filme->amostra); $i++){
+        for ($i = 1; $i < count($filme->amostra); $i++) {
             $vetxAll[$i] = $filme->amostra[$i][0];
             $vetyAll[$i] = $filme->amostra[$i][1];
         }
@@ -254,16 +252,31 @@ if (isset($_GET["dados"]))
         echo "<h4>$filme->nome:</h4>";
         $filme->correlacao = calcularCorrelacao($vetxAll, $vetyAll);
         echo "<p>";
-        echo "Correlação da amostra completa é de " . number_format($filme->correlacao, 2) . " (". classificarCorrelacao($filme->correlacao) .").";
+        echo "Correlação da amostra completa é de " . number_format($filme->correlacao, 2) . " (" . classificarCorrelacao($filme->correlacao) . ").";
         echo "<br>";
         echo "</p>";
         echo "<p>";
         $correlacao = calcularCorrelacao($vetx, $vety);
-        echo "Correlação da subamostra (do mês $filme->tempoEstab até o décimo segundo) " . number_format($correlacao, 2) . " (". classificarCorrelacao($correlacao) .").";
+        echo "Correlação da subamostra (do mês $filme->tempoEstab até o décimo segundo) " . number_format($correlacao, 2) . " (" . classificarCorrelacao($correlacao) . ").";
         echo "</p>";
         echo "</pre>";
     }
     ?>
+    <h2>Conclusão</h2>
+    <p>
+        Os dados das amostras inseridas indicam que <?php
+        $totalMeses = 0;
+        $correlacaoTotal = 0;
+        foreach ($dados as $filme) {
+            $totalMeses += $filme->tempoEstab;
+            $correlacaoTotal += $filme->correlacao;
+        }
+        $tempoMedio = $totalMeses / count($dados);
+        $correlacaoMedia = $correlacaoTotal / count($dados);
+        echo "o tempo médio para a estabilização das vendas é cerca de " . number_format($tempoMedio, 1) . " meses e, de acordo com a média dos coeficientes de correlação das amostras inseridas, há uma " . classificarCorrelacao($correlacaoMedia) . ".";
+        ?>
+    </p>
+
 </body>
 
 </html>

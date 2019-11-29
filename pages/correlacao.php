@@ -41,26 +41,27 @@ function calcularCorrelacao($vet1, $vet2)
 
 function classificarCorrelacao($valorR)
 {
+    $PouN = ($valorR < 0) ? "negativa" : "positiva";
     if($valorR < 0){
         $valorR = $valorR * -1;
     }
     //transforma o valor em positivo
     if ($valorR > 0.9) :
-        return 'Ótima';
+        return 'correlação ótima ' . $PouN;
 
     elseif ($valorR > 0.8) :
-        return 'Boa';
+        return 'correlação boa ' . $PouN;
 
     elseif ($valorR > 0.7) :
-        return 'Razoável';
+        return 'correlação razoável ' . $PouN;
 
     elseif ($valorR > 0.6) :
-        return 'Medíocre';
+        return 'correlação medíocre ' . $PouN;
 
     elseif ($valorR > 0.5) :
-        return 'Péssima';
+        return 'correlação péssima ' . $PouN;
 
     elseif ($valorR <= 0.5) :
-        return 'Imprópria';
+        return 'correlação imprópria ' . $PouN;
     endif;
 }
